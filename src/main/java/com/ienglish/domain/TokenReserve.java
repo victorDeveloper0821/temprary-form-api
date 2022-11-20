@@ -4,6 +4,8 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Set;
+
 /**
  * Form 表單 token 產生的 id
  */
@@ -21,25 +23,13 @@ public class TokenReserve {
     @Column(length = 20, nullable = false)
     private String last_name;
 
-    // 電話號碼
-    @Column(length = 16, nullable = false)
-    private String msisdn;
-
-    // email address
-    @Column(length = 20)
-    private String email;
-
-    // token 狀態
-    @Column(columnDefinition = "SMALLINT")
-    @Type(type = "org.hibernate.type.ShortType")
-    private Short status;
-
     // token 字串
     private String token;
-
     // service type
     @Column(length = 10, nullable = false)
     private String token_type;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tokenReserve")
+    private Set<TokenHistory> historySet;
 
 }
