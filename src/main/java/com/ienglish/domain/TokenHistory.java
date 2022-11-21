@@ -1,12 +1,20 @@
 package com.ienglish.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
+@ToString(exclude = {"tokenReserve"})
+@Data
+@EqualsAndHashCode(exclude="tokenReserve")
 @Table(name = "token_history")
-public class TokenHistory {
+public class TokenHistory implements Serializable {
     @Id
     private Long token_id;
 
@@ -36,6 +44,7 @@ public class TokenHistory {
     @Column(length = 10, nullable = false)
     private String token_type;
 
+    @JsonIgnore
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "reserve_id")
     private TokenReserve tokenReserve;

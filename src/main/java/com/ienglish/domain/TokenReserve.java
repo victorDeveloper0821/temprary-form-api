@@ -1,9 +1,12 @@
 package com.ienglish.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -11,8 +14,9 @@ import java.util.Set;
  */
 @Entity
 @Data
+@ToString(exclude = {"historySet"})
 @Table(name = "token_info")
-public class TokenReserve {
+public class TokenReserve implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rsv_id", nullable = false)
@@ -30,6 +34,7 @@ public class TokenReserve {
     @Column(length = 10, nullable = false)
     private String token_type;
 
+//    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tokenReserve")
     private Set<TokenHistory> historySet;
 

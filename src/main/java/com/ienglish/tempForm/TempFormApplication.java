@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.ienglish.*")
-@EnableJpaRepositories
+@EnableJpaRepositories("com.ienglish.repository")
 @EntityScan(basePackages = "com.ienglish.domain")
 public class TempFormApplication {
 

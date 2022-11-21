@@ -16,7 +16,7 @@ public interface TokenRepository extends CrudRepository<TokenReserve,Long> {
      * @param token
      * @return
      */
-//    Optional<TokenReserve> findByToken(String token);
+    Optional<TokenReserve> findByToken(String token);
 
     /**
      * 取得 token 的 service 類型
