@@ -21,7 +21,7 @@ public class TokenHistory {
     private String msisdn;
 
     // email address
-    @Column(length = 20)
+    @Column(length = 80)
     private String email;
 
     // token 狀態

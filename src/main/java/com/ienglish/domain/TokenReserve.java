@@ -11,6 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Data
+@Table(name = "token_info")
 public class TokenReserve {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

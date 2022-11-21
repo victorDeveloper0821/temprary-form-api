@@ -1,6 +1,8 @@
 package com.ienglish.controller;
 
+import com.ienglish.model.PersonalInfo;
 import com.ienglish.repository.TokenRepository;
+import com.ienglish.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,9 @@ public class TokenController {
 
     @RequestMapping(value = "", method = {RequestMethod.POST})
     @ResponseBody
-    public String createTokenInfo(@RequestBody HashMap<String, Object> map) {
+    public String createTokenInfo(@RequestBody PersonalInfo info) {
+        LogUtils.d("Data Payloads",info.toString());
+        LogUtils.i("restful api", "create token operation");
         return "create Token Info";
     }
 
@@ -23,16 +27,17 @@ public class TokenController {
     public String getTokenInfo(HttpServletRequest req, @PathVariable("token") String token) {
         String method = req.getMethod();
         if (method.equalsIgnoreCase("GET")) {
-            System.out.println("HTTP GET");
+            LogUtils.i("restful api", "Query Token Information");
         } else {
-            System.out.println("HTTP DELETE");
+            LogUtils.i("restful api", "Delete Token Information");
         }
         return "get Token Info";
     }
 
     @RequestMapping(value = "/{token}", method = {RequestMethod.PUT})
     @ResponseBody
-    public String updateTokenInfo(@PathVariable("token") String token, @RequestBody HashMap<String, Object> map) {
+    public String updateTokenInfo(@PathVariable("token") String token, @RequestBody PersonalInfo info) {
+        LogUtils.i("restful api", "Update Token Information");
         return "update Token Info";
     }
 }
