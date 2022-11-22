@@ -47,6 +47,6 @@ public class TokenHistory implements Serializable {
     @JsonIgnore
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "reserve_id")
-    private TokenReserve tokenReserve;
+    private TokenInfo tokenReserve;
 
 }
