@@ -24,6 +24,7 @@ public class TokenController {
     public String createTokenInfo(@RequestBody PersonalInfo info) {
         LogUtils.d("Data Payloads",info.toString());
         LogUtils.i("restful api", "create token operation");
+        tokenService.createTokenInfo(info);
         return "create Token Info";
     }
 

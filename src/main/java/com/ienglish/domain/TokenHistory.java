@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Entity
 @ToString(exclude = {"tokenReserve"})
 @Data
-@EqualsAndHashCode(exclude="tokenReserve")
+@EqualsAndHashCode(exclude="tokenInfo")
 @Table(name = "token_history")
 public class TokenHistory implements Serializable {
     @Id
@@ -47,6 +47,6 @@ public class TokenHistory implements Serializable {
     @JsonIgnore
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "reserve_id")
-    private TokenInfo tokenReserve;
+    private TokenInfo tokenInfo;
 
 }

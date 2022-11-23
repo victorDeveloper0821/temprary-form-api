@@ -42,7 +42,7 @@ public class TokenInfo implements Serializable {
     private String token_type;
 
 //    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tokenReserve")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tokenInfo")
     private Set<TokenHistory> historySet;
 
 }
