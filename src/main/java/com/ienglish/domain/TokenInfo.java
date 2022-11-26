@@ -14,19 +14,19 @@ import java.util.Set;
 @Data
 @ToString(exclude = {"historySet"})
 @Table(name = "token_info")
-@NamedEntityGraph(name = "TokenWithHistory",attributeNodes = {
-        @NamedAttributeNode(value = "historySet",subgraph = "history-subgraph")
-},subgraphs = {
+@NamedEntityGraph(name = "TokenWithHistory",
+        attributeNodes = @NamedAttributeNode(value = "historySet",subgraph = "history-subgraph"),
+        subgraphs = {
         @NamedSubgraph(name = "history-subgraph", attributeNodes = {
-                @NamedAttributeNode("token"),
-                @NamedAttributeNode("token_type"),
-                @NamedAttributeNode("status")
+                @NamedAttributeNode(value="token"),
+                @NamedAttributeNode(value="token_type"),
+                @NamedAttributeNode(value="status")
         })
 })
 public class TokenInfo implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "rsv_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "rsv_id", nullable = false)
     private Long rsv_id;
 
     @Column(length = 20, nullable = false)
@@ -42,7 +42,7 @@ public class TokenInfo implements Serializable {
     private String token_type;
 
 //    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "tokenInfo")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tokenInfo")
     private Set<TokenHistory> historySet;
 
 }

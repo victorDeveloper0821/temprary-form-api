@@ -10,12 +10,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@ToString(exclude = {"tokenReserve"})
+@ToString(exclude = {"tokenInfo"})
 @Data
 @EqualsAndHashCode(exclude="tokenInfo")
 @Table(name = "token_history")
 public class TokenHistory implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long token_id;
 
     @Column(length = 20, nullable = false)
@@ -45,7 +46,7 @@ public class TokenHistory implements Serializable {
     private String token_type;
 
     @JsonIgnore
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade= CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
     private TokenInfo tokenInfo;
 

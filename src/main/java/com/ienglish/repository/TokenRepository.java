@@ -15,6 +15,7 @@ public interface TokenRepository extends CrudRepository<TokenInfo,Long> {
      * @param token
      * @return
      */
+    @EntityGraph(value = "TokenWithHistory", type = EntityGraph.EntityGraphType.LOAD)
     Optional<TokenInfo> findByToken(String token);
 
     /**
