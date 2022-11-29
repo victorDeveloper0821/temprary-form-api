@@ -22,9 +22,9 @@ public class TokenService {
     @Autowired
     private TokenHistoryRepository tokenHistoryRepository;
 
-    public TokenInfo getTokenInfoByToken(String token){
+    public Optional<TokenInfo> getTokenInfoByToken(String token){
         Optional<TokenInfo> tokenOpt = tokenRepository.findByToken(token);
-        return tokenOpt.orElse(new TokenInfo());
+        return tokenOpt;
     }
 
     public List<TokenInfo> getAllRecord(){
@@ -53,5 +53,9 @@ public class TokenService {
         history.setToken_type(info.getForm_type());
         history.setTokenInfo(token);
         tokenHistoryRepository.save(history);
+    }
+
+    public List<TokenHistory> findTokenHistory(){
+        return tokenHistoryRepository.findAll();
     }
 }

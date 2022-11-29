@@ -1,15 +1,20 @@
 package com.ienglish.controller;
 
+import com.ienglish.domain.TokenHistory;
 import com.ienglish.domain.TokenInfo;
+import com.ienglish.model.APIResponse;
 import com.ienglish.model.PersonalInfo;
 import com.ienglish.service.TokenService;
 import com.ienglish.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/v1")
@@ -30,15 +35,31 @@ public class TokenController {
 
     @RequestMapping(value = "/token/{token}", method = {RequestMethod.GET, RequestMethod.DELETE})
     @ResponseBody
-    public TokenInfo getTokenInfo(HttpServletRequest req, @PathVariable("token") String token) {
+    public ResponseEntity<APIResponse> getTokenInfo(HttpServletRequest req, @PathVariable("token") String token) {
         String method = req.getMethod();
-        TokenInfo aa = tokenService.getTokenInfoByToken(token);
+        Optional<TokenInfo> tokenOpt = tokenService.getTokenInfoByToken(token);
+        APIResponse response = new APIResponse();
         if (method.equalsIgnoreCase("GET")) {
-            LogUtils.i("restful api", "Query Token Information");
+            if(tokenOpt.isPresent()){
+                response.setData(tokenOpt.get());
+                response.setSuccess(true);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.OK);
+            }else{
+                response.setSuccess(false);
+                response.setData(null);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.NOT_FOUND);
+            }
         } else {
-            LogUtils.i("restful api", "Delete Token Information");
+            if(tokenOpt.isPresent()){
+                response.setData(tokenOpt.get());
+                response.setSuccess(true);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.OK);
+            }else{
+                response.setSuccess(false);
+                response.setData(null);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.NOT_FOUND);
+            }
         }
-        return aa;
     }
 
     @RequestMapping(value = "/token/{token}", method = {RequestMethod.PUT})
@@ -52,5 +73,11 @@ public class TokenController {
     @ResponseBody
     public List<TokenInfo> findAllRecord(){
         return tokenService.getAllRecord();
+    }
+
+    @RequestMapping(value = "/tokenHistories",method = {RequestMethod.GET})
+    @ResponseBody
+    public List<TokenHistory> findAllHistory(){
+        return tokenService.findTokenHistory();
     }
 }
