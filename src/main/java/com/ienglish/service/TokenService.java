@@ -58,4 +58,8 @@ public class TokenService {
     public List<TokenHistory> findTokenHistory(){
         return tokenHistoryRepository.findAll();
     }
+
+    public Optional<TokenHistory> findLatestHistoryByToken(String token){
+        return tokenHistoryRepository.findByTokenOrderByStatusTimeStampDesc(token);
+    }
 }

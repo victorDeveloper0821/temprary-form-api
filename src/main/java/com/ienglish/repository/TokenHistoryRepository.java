@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface TokenHistoryRepository extends CrudRepository<TokenHistory,Long> {
     @EntityGraph(value = "historyGraph")
     public List<TokenHistory> findAll();
+    @EntityGraph(value = "historyGraph")
+    public Optional<TokenHistory> findByTokenOrderByStatusTimeStampDesc(String token);
 }

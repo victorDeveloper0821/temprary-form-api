@@ -7,6 +7,7 @@ import com.ienglish.model.PersonalInfo;
 import com.ienglish.service.TokenService;
 import com.ienglish.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -79,5 +80,20 @@ public class TokenController {
     @ResponseBody
     public List<TokenHistory> findAllHistory(){
         return tokenService.findTokenHistory();
+    }
+
+    @RequestMapping(value = "/tokenHistories/{token}",method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseEntity<APIResponse> findHistoryByToken(@PathVariable("token") String token){
+        Optional<TokenHistory> historyOpt = tokenService.findLatestHistoryByToken(token);
+        APIResponse response = new APIResponse();
+        if(historyOpt.isPresent()){
+            response.setSuccess(true);
+            response.setData(historyOpt.get());
+            return new ResponseEntity<APIResponse>(response,HttpStatus.OK);
+        }else{
+            response.setSuccess(true);
+            return new ResponseEntity<APIResponse>(response,HttpStatus.NOT_FOUND);
+        }
     }
 }
