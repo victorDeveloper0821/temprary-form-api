@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -35,7 +36,11 @@ public class TokenInfo implements Serializable {
     @Column(length = 20, nullable = false)
     private String last_name;
 
+    @Column(length = 80, nullable = false)
+    private String email;
+
     // token 字串
+    @Column(unique = true)
     private String token;
     // service type
     @Column(length = 10, nullable = false)
@@ -45,4 +50,9 @@ public class TokenInfo implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tokenInfo")
     private Set<TokenHistory> historySet;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "token" )
+    private FormContent form;
+
+    @Temporal(value = TemporalType.DATE)
+    private Date exiaryDate;
 }
