@@ -7,7 +7,6 @@ import com.ienglish.model.PersonalInfo;
 import com.ienglish.service.TokenService;
 import com.ienglish.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,7 +47,7 @@ public class TokenController {
             }else{
                 response.setSuccess(false);
                 response.setData(null);
-                return new ResponseEntity<APIResponse>(response, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.NO_CONTENT);
             }
         } else {
             if(tokenOpt.isPresent()){
@@ -58,7 +57,7 @@ public class TokenController {
             }else{
                 response.setSuccess(false);
                 response.setData(null);
-                return new ResponseEntity<APIResponse>(response, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<APIResponse>(response, HttpStatus.NO_CONTENT);
             }
         }
     }
@@ -93,7 +92,7 @@ public class TokenController {
             return new ResponseEntity<APIResponse>(response,HttpStatus.OK);
         }else{
             response.setSuccess(true);
-            return new ResponseEntity<APIResponse>(response,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<APIResponse>(response,HttpStatus.NO_CONTENT);
         }
     }
 }
