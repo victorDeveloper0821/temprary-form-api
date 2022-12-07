@@ -1,6 +1,8 @@
 package com.ienglish.config;
 
 import com.google.common.base.Predicates;
+import org.jboss.jandex.Main;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -15,7 +17,12 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
+/**
+ * Swagger2 設定檔
+ */
 public class SwaggerConfig {
+    @Autowired
+    private MaintainerInfo info;
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -27,14 +34,18 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
+    /**
+     * 設定 Swagger Document Maintainer 資訊
+     * @return
+     */
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "To Do List 鐵人賽",
-                "第12屆iT邦幫幫忙鐵人賽 To Do List API",
-                "v1.0",
+                info.getTitle(),
+                info.getDescription(),
+                info.getVersion(),
                 "",
-                new Contact("CaiLiWu", "",
-                        "dy5025115@gmail.com"),
+                new Contact(info.getName(), "",
+                        info.getEmail()),
                 "", "", Collections.emptyList());
     }
 }
