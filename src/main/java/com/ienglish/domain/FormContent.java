@@ -1,38 +1,43 @@
 package com.ienglish.domain;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.bind.Name;
+import org.springframework.data.jpa.repository.EntityGraph;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /**
  * 表單回應的內容
  */
 @Entity
-@Table(name="Form")
+@Table(name = "Form")
 @Data
+@NamedEntityGraph(name = "form-token-relation"
+        , attributeNodes = {
+        @NamedAttributeNode(value = "token", subgraph = "token.basic")
+        , @NamedAttributeNode("content")
+        , @NamedAttributeNode("done")
+}
+        , subgraphs = {
+        @NamedSubgraph(name = "token.basic"
+                , attributeNodes = {
+                @NamedAttributeNode("first_name"),
+                @NamedAttributeNode("last_name"),
+                @NamedAttributeNode("email"),
+                @NamedAttributeNode("token"),
+                @NamedAttributeNode("token_type")
+
+        })})
 public class FormContent {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long form_id;
 
-    private String token;
-
-    @Column(length = 20, nullable = false)
-    private String first_name;
-
-    @Column(length = 20, nullable = false)
-    private String last_name;
-
-    // 電話號碼
-    @Column(length = 16, nullable = false)
-    private String msisdn;
-
-    // email address
-    @Column(length = 20)
-    private String email;
-
     private String content;
+
+    private Boolean done;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "token_id")
+    private TokenInfo token;
 }

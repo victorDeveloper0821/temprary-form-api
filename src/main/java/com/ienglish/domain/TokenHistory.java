@@ -4,16 +4,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.springframework.boot.context.properties.bind.Name;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @ToString(exclude = {"tokenInfo"})
 @Data
 @EqualsAndHashCode(exclude="tokenInfo")
 @Table(name = "token_history")
+@NamedEntityGraph(name="historyGraph"
+        ,attributeNodes = {@NamedAttributeNode(value = "tokenInfo",subgraph = "token.basic")}
+        , subgraphs = {@NamedSubgraph(name = "token.basic",attributeNodes = {
+        @NamedAttributeNode("first_name"),
+        @NamedAttributeNode("last_name"),
+        @NamedAttributeNode("token_type")
+
+})})
 public class TokenHistory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,4 +61,7 @@ public class TokenHistory implements Serializable {
     @JoinColumn(name = "reserve_id")
     private TokenInfo tokenInfo;
 
+    @Column(name = "statusTimeStamp", nullable = false, updatable = false)
+    @CreationTimestamp
+    private Date statusTimeStamp;
 }
