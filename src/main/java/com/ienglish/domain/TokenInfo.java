@@ -53,6 +53,6 @@ public class TokenInfo implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "token" )
     private FormContent form;
 
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date exiaryDate;
 }

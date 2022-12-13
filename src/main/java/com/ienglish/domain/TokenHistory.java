@@ -30,20 +30,6 @@ public class TokenHistory implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long token_id;
 
-    @Column(length = 20, nullable = false)
-    private String first_name;
-
-    @Column(length = 20, nullable = false)
-    private String last_name;
-
-    // 電話號碼
-    @Column(length = 16, nullable = false)
-    private String msisdn;
-
-    // email address
-    @Column(length = 80)
-    private String email;
-
     // token 狀態
     @Column(columnDefinition = "SMALLINT")
     @Type(type = "org.hibernate.type.ShortType")
