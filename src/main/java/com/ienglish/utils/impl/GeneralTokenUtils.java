@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class GeneralTokenUtils implements TokenUtils {
     @Override
     public String generateToken() {
+        logger.info("testing here");
         return null;
     }
 }
