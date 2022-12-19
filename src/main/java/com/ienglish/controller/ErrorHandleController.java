@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.xml.ws.Response;
-
 @ControllerAdvice
 public class ErrorHandleController {
     @ExceptionHandler(value = {IllegalArgumentException.class})
