@@ -1,0 +1,6 @@
+## git repo files
+.git/**
+.gitignore
+
+.idea/**
+*.md
